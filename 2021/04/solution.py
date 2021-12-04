@@ -108,7 +108,7 @@ def main():
         score = part1(bingo_boards, bingo_numbers)
         print("Score: %i" % score)
         
-        # PART II: Find the board that wins last
+        # PART II: Find the last bingo
         # Fill boards
         bingo_boards = create_boards(content)
         score = part2(bingo_boards, bingo_numbers)
