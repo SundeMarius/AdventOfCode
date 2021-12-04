@@ -3,7 +3,7 @@ import sys
 import statistics as st
 
 def invert_bits(n, num_bits):
-    # Example: ~1001 = 1111 - 0110
+    # Example: ~1001 = 1111 - 1001 = 0110
     return (1 << num_bits) - 1 - n
 
 with open(sys.argv[1]) as f:
