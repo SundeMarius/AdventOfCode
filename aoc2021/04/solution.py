@@ -41,16 +41,11 @@ class BingoBoard:
             column = [row[col_idx] for row in self.board]
             if all(n.is_selected() for n in column):
                 return True
+        # No bingo :/
         return False
-    
-    def score(self, winning_number: int) -> int:
-        score = 0
-        for row in self.board:
-            for n in row:
-                if not n.is_selected():
-                    score += n.value()
-        score *= winning_number
-        return score
+
+    def board_list(self) -> list[list[BingoNumber]]:
+        return self.board
 
     def __repr__(self) -> str:
         ret = ""
@@ -58,24 +53,32 @@ class BingoBoard:
             ret += "    ".join([str(x) for x in row]) + "\n"
         return ret
 
-def create_boards(boards_as_str):
+def create_boards(boards_as_str) -> list[BingoBoard]:
     bingo_boards = []
     for board_str in boards_as_str:
         board = BingoBoard(board_str) 
         bingo_boards.append(board)
     return bingo_boards
 
-def part1(bingo_boards, bingo_numbers):
+def score(board: BingoBoard, winning_number: int) -> int:
+    score = 0
+    for row in board:
+        for n in row:
+            if not n.is_selected():
+                score += n.value()
+    score *= winning_number
+    return score
+
+def part1(bingo_boards, bingo_numbers) -> int:
     for number in bingo_numbers:
         for board in bingo_boards:
             board.apply_bingo_number(number)
             if board.bingo():
                 print("--- Bingo! ---\n")
                 print(board)
-                print("Score: %i" % board.score(number))
-                return
+                return score(board.board_list(), number) 
 
-def part2(bingo_boards: list, bingo_numbers):
+def part2(bingo_boards: list, bingo_numbers) -> int:
     last_board = []
     for number in bingo_numbers:
         for board in bingo_boards:
@@ -87,12 +90,11 @@ def part2(bingo_boards: list, bingo_numbers):
         if not bingo_boards:
             print("--- Last bingo! ---\n")
             print(last_board)
-            print("Score: %i" % last_board.score(number))
-            return
-
+            return score(last_board.board_list(), number)
 
 def main():
     with open(sys.argv[1]) as f:
+
         content = f.read().split("\n\n")
 
         # Get bingo numbers
@@ -103,12 +105,14 @@ def main():
         # PART I: Run through bingo numbers
         # Fill boards
         bingo_boards = create_boards(content)
-        part1(bingo_boards, bingo_numbers)
+        score = part1(bingo_boards, bingo_numbers)
+        print("Score: %i" % score)
         
         # PART II: Find the board that wins last
         # Fill boards
         bingo_boards = create_boards(content)
-        part2(bingo_boards, bingo_numbers)
+        score = part2(bingo_boards, bingo_numbers)
+        print("Score: %i" % score)
 
 if __name__ == "__main__":
     main()
