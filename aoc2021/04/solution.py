@@ -102,7 +102,7 @@ def main():
         bingo_numbers = bingo_numbers.split(',')
         bingo_numbers = [int(n) for n in bingo_numbers]
 
-        # PART I: Run through bingo numbers
+        # PART I: Find first bingo
         # Fill boards
         bingo_boards = create_boards(content)
         score = part1(bingo_boards, bingo_numbers)
