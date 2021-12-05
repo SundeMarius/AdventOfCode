@@ -1,11 +1,5 @@
 import sys
 
-def check_point(point: tuple, points: dict):
-    if point in points:
-        points[point] += 1
-        return
-    points[point] = 1
-
 def get_input(part: int):
     lines = open(sys.argv[1]).read().splitlines()
     start_points = []
@@ -25,6 +19,12 @@ def get_input(part: int):
                 end_points.append(end)
     return start_points, end_points
 
+def check_point(point: tuple, points: dict):
+    if point in points:
+        points[point] += 1
+        return
+    points[point] = 1
+
 def part1():
     start_points, end_points = get_input(1)
     points = {}
@@ -34,15 +34,13 @@ def part1():
         x1 = end[0]
         y1 = end[1]
         if x0 == x1:
-            direction = (1 if y1 > y0 else -1)
-            for y in range(y0, y1 + direction, direction):
-                point = (x0, y)
-                check_point(point, points)
+            dir_y = (1 if y1 > y0 else -1)
+            for y in range(y0, y1 + dir_y, dir_y):
+                check_point((x0, y), points)
         else:
-            direction = (1 if x1 > x0 else -1)
-            for x in range(x0, x1 + direction, direction):
-                point = (x, y0)
-                check_point(point, points)
+            dir_x = (1 if x1 > x0 else -1)
+            for x in range(x0, x1 + dir_x, dir_x):
+                check_point((x, y0), points)
     print("PART I) Number of points with at least two lines overlap: ", sum(1 for occ in points.values() if occ >= 2))
 
 def part2():
@@ -53,25 +51,19 @@ def part2():
         y0 = start[1]
         x1 = end[0]
         y1 = end[1]
+        dir_x = (1 if x1 > x0 else -1)
+        dir_y = (1 if y1 > y0 else -1)
         if x0 == x1:
-            direction = (1 if y1 > y0 else -1)
-            for y in range(y0, y1 + direction, direction):
-                point = (x0, y)
-                check_point(point, points)
+            for y in range(y0, y1 + dir_y, dir_y):
+                check_point((x0, y), points)
         elif y0 == y1:
-            direction = (1 if x1 > x0 else -1)
-            for x in range(x0, x1 + direction, direction):
-                point = (x, y1)
-                check_point(point, points)
-        else:
-            dir_x = (1 if x1 > x0 else -1)
-            dir_y = (1 if y1 > y0 else -1)
-            i = 0
             for x in range(x0, x1 + dir_x, dir_x):
-                y = y0 + dir_y*i
-                point = (x, y)
-                check_point(point, points)
-                i += 1
+                check_point((x, y1), points)
+        else:
+            y = y0
+            for x in range(x0, x1 + dir_x, dir_x):
+                check_point((x, y), points)
+                y += dir_y
     print("PART II) Number of points with at least two lines overlap: ", sum(1 for occ in points.values() if occ >= 2))
 
 part1()
