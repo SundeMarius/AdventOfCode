@@ -20,7 +20,7 @@ for line in [s.split(' | ')[1] for s in lines]:
 print(f"Part 1: {sum(digits.values())}")
 
 def decoder(codes: "list[str]") -> 'dict[str]':
-    sorted_codes = sorted([''.join(sorted(code)) for code in codes], key=len)
+    sorted_codes = sorted(codes, key=len)
     decoded_digits = {}
     memory = {}
     sets = [set(list(s)) for s in sorted_codes]
