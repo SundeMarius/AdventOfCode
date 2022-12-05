@@ -55,7 +55,7 @@ internal class Solution
                 {
                     'A' => 'Z',
                     'B' => 'X',
-                    'C' => 'Y'
+                    'C' => 'Y',
                 },
                 'Y' => opponent switch
                 {
@@ -68,7 +68,8 @@ internal class Solution
                     'C' => 'X',
                     'A' => 'Y',
                     'B' => 'Z'
-                }
+                },
+                _ => '0'
             };
             total += TotalScore(new Outcome(opponent, draw));
         }

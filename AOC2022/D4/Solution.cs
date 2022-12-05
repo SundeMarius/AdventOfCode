@@ -12,29 +12,24 @@ internal class Solution
 
     public int SolvePart1()
     {
-        int total = 0;
-        foreach(var assignment in _assignments)
-        {
-            var leftId1 = int.Parse(assignment.Split(',')[0].Split('-')[0]);
-            var leftId2 = int.Parse(assignment.Split(',')[0].Split('-')[1]);
-            var rightId1 = int.Parse(assignment.Split(',')[1].Split('-')[0]);
-            var rightId2 = int.Parse(assignment.Split(',')[1].Split('-')[1]);
-            total += (leftId1 <= rightId1 && leftId2 >= rightId2) || (rightId1 <= leftId1 && rightId2 >= leftId2) ? 1 : 0;
-        }
-        return total;
+        return (from assignment in _assignments
+                let leftId1 = int.Parse(assignment.Split(',')[0].Split('-')[0])
+                let leftId2 = int.Parse(assignment.Split(',')[0].Split('-')[1])
+                let rightId1 = int.Parse(assignment.Split(',')[1].Split('-')[0])
+                let rightId2 = int.Parse(assignment.Split(',')[1].Split('-')[1])
+                select (leftId1 <= rightId1 && leftId2 >= rightId2) || (rightId1 <= leftId1 && rightId2 >= leftId2)
+                    ? 1
+                    : 0)
+            .Sum();
     }
     
     public int SolvePart2()
     {
-        int total = 0;
-        foreach(var assignment in _assignments)
-        {
-            var leftId1 = int.Parse(assignment.Split(',')[0].Split('-')[0]);
-            var leftId2 = int.Parse(assignment.Split(',')[0].Split('-')[1]);
-            var rightId1 = int.Parse(assignment.Split(',')[1].Split('-')[0]);
-            var rightId2 = int.Parse(assignment.Split(',')[1].Split('-')[1]);
-            total += leftId2 < rightId1 || rightId2 < leftId1 ? 0 : 1;
-        }
-        return total;
+        return (from assignment in _assignments
+            let leftId1 = int.Parse(assignment.Split(',')[0].Split('-')[0])
+            let leftId2 = int.Parse(assignment.Split(',')[0].Split('-')[1])
+            let rightId1 = int.Parse(assignment.Split(',')[1].Split('-')[0])
+            let rightId2 = int.Parse(assignment.Split(',')[1].Split('-')[1])
+            select leftId2 < rightId1 || rightId2 < leftId1 ? 0 : 1).Sum();
     }
 }
