@@ -1,4 +1,4 @@
-﻿using AOC2022.D8;
+﻿using AOC2022.D9;
 
 var solutionSample = new Solution(Solution.Sample);
 var solutionInput = new Solution(Solution.Input);

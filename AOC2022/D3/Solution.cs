@@ -20,34 +20,12 @@ internal class Solution
         return char.IsUpper(priority) ? priority - 'A' + 27 : priority - 'a' + 1;
     }
 
-    public int SolvePart1()
-    {
-        var total = 0;
-        foreach (var rucksack in _ruckSacks)
-        {
-            var length = rucksack.Length;
-            var left = rucksack[..(length / 2)];
-            var right = rucksack[(length / 2)..];
-            HashSet<char> leftSet = new (left.ToCharArray());
-            HashSet<char> rightSet = new (right.ToCharArray());
-            var priority = leftSet.Intersect(rightSet).First();
-            total += GetPriorityFromChar(priority);
-        }
-        return total;
-    }
-    
+    public int SolvePart1() =>
+        (from rucksack in _ruckSacks let length = rucksack.Length let left = rucksack[..(length / 2)] let right = rucksack[(length / 2)..] let leftSet = new HashSet<char>(left.ToCharArray()) let rightSet = new HashSet<char>(right.ToCharArray()) select leftSet.Intersect(rightSet).First() into priority select GetPriorityFromChar(priority)).Sum();
+
     public int SolvePart2()
     {
-        var total = 0;
         var split = _ruckSacks.Select((x, i) => _ruckSacks.Skip(i * 3).Take(3));
-        foreach (var ruckSack in split.Take(split.Count()/3))
-        {
-            HashSet<char> set1 = new(ruckSack.ElementAt(0));
-            HashSet<char> set2 = new(ruckSack.ElementAt(1));
-            HashSet<char> set3 = new(ruckSack.ElementAt(2));
-            var priority = set1.Intersect(set2).Intersect(set3).First();
-            total += GetPriorityFromChar(priority);
-        }
-        return total;
+        return (from ruckSack in split.Take(split.Count() / 3) let set1 = new HashSet<char>(ruckSack.ElementAt(0)) let set2 = new HashSet<char>(ruckSack.ElementAt(1)) let set3 = new HashSet<char>(ruckSack.ElementAt(2)) select set1.Intersect(set2).Intersect(set3).First() into priority select GetPriorityFromChar(priority)).Sum();
     }
 }
