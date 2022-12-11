@@ -21,13 +21,7 @@ internal class Solution
         _totalCaloriesForEachElf.Reverse();
     }
 
-    public int SolvePart1()
-    {
-        return _totalCaloriesForEachElf.First();
-    }
-    
-    public int SolvePart2()
-    {
-        return _totalCaloriesForEachElf.Take(3).Sum();
-    }
+    public int SolvePart1() => _totalCaloriesForEachElf.First();
+
+    public int SolvePart2() => _totalCaloriesForEachElf.Take(3).Sum();
 }

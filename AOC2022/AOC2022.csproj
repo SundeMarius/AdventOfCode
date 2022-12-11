@@ -15,6 +15,12 @@
       <Content Include="D10\sample.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <Content Include="D11\input.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="D11\sample.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="D2\input.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
